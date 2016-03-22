@@ -7,12 +7,12 @@ var orderSchema = new Schema({
         type: Date,
         deafult: Date.now(),
         required: [true, 'Nie zapomnij o dedlajnie!'],
-        min: [Date.now(), 'Dedlajn nie może być wcześniej']
+        min: [Date.now(), 'Dedlajn nie może być w przeszłości']
     },
     deliveryTime: {
         type: Date,
         required: [true, 'Czas dostawy jest wymagan!'],
-        min: [Date.now(), 'Czas dostawy nie może być wcześniej']
+        min: [Date.now(), 'Czas dostawy nie może być w przeszłości']
     },
     restaurant: {
         type: String,

@@ -43,7 +43,7 @@ module.exports = function apiRoutes (router) {
             deadline: mapHourToDate(newOrder.deadline.hour),
             deliveryTime: mapHourToDate(newOrder.deliveryTime.hour),
             restaurant: newOrder.restaurant,
-            menu: '',
+            menu: newOrder.menu,
             description: newOrder.description,
             password: newOrder.password,
             author: newOrder.author,
@@ -59,7 +59,7 @@ module.exports = function apiRoutes (router) {
                 const errorsDictionary = [];
 
                 for (let property in error.errors) {
-                    if (error.errrs.hasOwnProperty(property)) {
+                    if (error.errors.hasOwnProperty(property)) {
                         errorsDictionary.push({property, message: error.errors[property].message});
                     }
                 }

@@ -5,6 +5,10 @@ import {connect} from 'react-redux';
 import {addNewOrder} from '../store/ordersActions';
 
 const NewOrderForm = React.createClass({
+    propTypes: {
+        dispatch: React.PropTypes.func.isRequired
+    },
+
     getInitialState () {
         return {
             restaurant: '',
@@ -16,6 +20,7 @@ const NewOrderForm = React.createClass({
                 hour: '',
                 isValid: true
             },
+            menu: '',
             description: '',
             password: '',
             passwordRepeat: '',
@@ -73,6 +78,13 @@ const NewOrderForm = React.createClass({
                                 onChange={this.handleHourChange}
                                 placeholder="Zamawiam na"
                                 value={this.state.deliveryTime}
+                            />
+                            <Input
+                                id="menu"
+                                label="Menu"
+                                onChange={this.handleTextChange}
+                                placeholder="Menu"
+                                type="text"
                             />
                             <Input
                                 id="description"
