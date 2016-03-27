@@ -13,6 +13,7 @@ import OrderDetails from './orderDetails';
 import {orders, activeOrder} from '../store/orders';
 import localization from '../store/localization';
 import changeLocale from '../store/localizationActions';
+import {hydrateOrders} from '../store/ordersActions';
 
 // Add the reducer to your store on the `routing` key
 const store = createStore(
@@ -31,7 +32,28 @@ const App = connect(state => ({resources: state.localization.resources.app}))(
     React.createClass({
         propTypes: {
             children: React.PropTypes.object,
+            dispatch: React.PropTypes.func.isRequired,
             resources: React.PropTypes.object.isRequired
+        },
+
+        componentDidMount () {
+            fetch('/api/orders')
+                .then(response => response.json())
+                .then(orders => {
+                    const ordersToday = orders.map(orderWithStringDates => {
+                        return {
+                            ...orderWithStringDates,
+                            deadline: new Date(orderWithStringDates.deadline)
+                        }
+                    }).filter(order => {
+                        const today = new Date();
+                        return today.getFullYear() === order.deadline.getFullYear() &&
+                            today.getMonth() === order.deadline.getMonth() &&
+                            today.getDate() === order.deadline.getDate();
+                    });
+
+                    this.props.dispatch(hydrateOrders(ordersToday));
+                });
         },
 
         render () {
