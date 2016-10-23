@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {browserHistory} from 'react-router';
+import browserHistory from '../utils/browserHistory';
 
 import OrderState from '../enums/orderState';
 

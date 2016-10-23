@@ -76,5 +76,5 @@ export default connect(
         order: state.activeOrder,
         resources: state.localization.resources.orderManagement
     }),
-    { foodOrdered, getOrderToManage }
+    {foodOrdered, getOrderToManage}
 )(ManageOrder);

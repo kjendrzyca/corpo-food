@@ -1,4 +1,4 @@
-import {browserHistory} from 'react-router';
+import browserHistory from '../utils/browserHistory';
 
 import OrderState from '../enums/orderState';
 import {mapHourToDate} from '../services/dateManipulation';

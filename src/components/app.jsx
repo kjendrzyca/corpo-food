@@ -2,7 +2,7 @@ import React from 'react';
 import DOM from 'react-dom';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider, connect} from 'react-redux';
-import {browserHistory, Router, Route, IndexRoute} from 'react-router';
+import {Router, Route, IndexRoute} from 'react-router';
 import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
 import thunkMiddleware from 'redux-thunk';
 
@@ -12,6 +12,7 @@ import OrderOverview from './orderOverview';
 import Errors from './errors';
 import ManageOrder from './manageOrder';
 import Notification from './notification';
+import browserHistory from '../utils/browserHistory';
 
 import {orders, activeOrder} from '../store/orders';
 import localization from '../store/localization';

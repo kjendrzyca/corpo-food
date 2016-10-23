@@ -84,6 +84,19 @@ const resources = {
             username: 'nazwa użytkownika',
             provideUsername: 'podaj nazwę użytkownika',
             randomUsername: 'LOSOWA NAZWA'
+        },
+        orderManagement: {
+            managerBadge: 'MENADŻER',
+            states: {
+                ordered: 'Zamówione!'
+            }
+        },
+        notifications: {
+            manager: {
+                title: 'Zamówienie gotowe, ludzie mogą bez fakapu zamawiać jedzenie',
+                introToLink: 'Oto Twój permalink pod którym możesz się fokusować na zamówienie:',
+                betterSaveIt: 'Lepiej uniknij fakapu i gdzieś zapisz ten link, bo nie pokażemy Ci go więcej!'
+            }
         }
     },
     en: {
@@ -178,7 +191,7 @@ const resources = {
         },
         notifications: {
             manager: {
-                title: 'Order is ready, here is your link to manage it',
+                title: 'Order is ready, people can sign up for food!',
                 introToLink: 'Here is your permanent link to a page where you can manage this order:',
                 betterSaveIt: 'You should probably save this link somewhere as we will never give it to you again!'
             }
