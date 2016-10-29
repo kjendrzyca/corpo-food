@@ -10,19 +10,18 @@ import messageBuilderFactory from '../utils/messageBuilderFactory';
 
 const OrderOverview = React.createClass({
     propTypes: {
-        getOrder: React.PropTypes.func.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
         order: React.PropTypes.object.isRequired,
         params: React.PropTypes.object.isRequired,
-        removeMeal: React.PropTypes.func.isRequired,
         user: React.PropTypes.object.isRequired,
     },
 
     componentDidMount () {
-        this.props.getOrder(this.props.params.id);
+        this.props.dispatch(getOrder(this.props.params.id));
     },
 
     render () {
-        const {order, removeMeal, user} = this.props;
+        const {dispatch, order, user} = this.props;
         const ifOrderLoaded = content => !order.fetching ? content : null;
 
         return (
@@ -34,7 +33,7 @@ const OrderOverview = React.createClass({
                     {
                         ifOrderLoaded(
                             <div className="col-xs-12 col-lg-6">
-                                <MealList meals={order.meals} removeMeal={removeMeal} user={user} />
+                                <MealList meals={order.meals} removeMeal={meal => dispatch(removeMeal(meal))} user={user} />
                                 <SignUpForMeal />
                             </div>
                         )
@@ -61,6 +60,5 @@ export default connect(
     state => ({
         order: state.activeOrder,
         user: state.user,
-    }),
-    {getOrder, removeMeal}
+    })
 )(OrderOverview);
