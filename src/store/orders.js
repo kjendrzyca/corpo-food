@@ -3,7 +3,7 @@ export const orders = (state = [], action) => {
     case 'ADD_NEW_ORDER':
         return [
             ...state,
-            action.order
+            action.order,
         ];
     case 'HYDRATE_ORDERS':
         return action.orders;
@@ -19,20 +19,25 @@ export const activeOrder = (state = {fetching: true}, action) => {
     case 'FETCHING_ORDER':
         return {
             ...state,
-            fetching: true
+            fetching: true,
         };
     case 'SIGN_UP_FOR_MEAL':
         return {
             ...state,
             meals: [
                 ...state.meals,
-                action.meal
-            ]
+                action.meal,
+            ],
+        };
+    case 'REMOVE_MEAL':
+        return {
+            ...state,
+            meals: state.meals.filter(meal => meal._id !== action.meal._id),
         };
     case 'CHANGE_STATE':
         return {
             ...state,
-            state: action.state
+            state: action.state,
         };
     default:
         return state;

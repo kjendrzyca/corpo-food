@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {getOrder} from '../store/ordersActions';
+import {getOrder, removeMeal} from '../store/ordersActions';
 import Chat from './chat';
 import MealList from './mealList';
 import SignUpForMeal from './signUpForMeal';
@@ -10,17 +10,18 @@ import messageBuilderFactory from '../utils/messageBuilderFactory';
 
 const OrderOverview = React.createClass({
     propTypes: {
-        getOrder: React.PropTypes.func.isRequired,
+        dispatch: React.PropTypes.func.isRequired,
         order: React.PropTypes.object.isRequired,
         params: React.PropTypes.object.isRequired,
+        user: React.PropTypes.object.isRequired,
     },
 
     componentDidMount () {
-        this.props.getOrder(this.props.params.id);
+        this.props.dispatch(getOrder(this.props.params.id));
     },
 
     render () {
-        const {order} = this.props;
+        const {dispatch, order, user} = this.props;
         const ifOrderLoaded = content => !order.fetching ? content : null;
 
         return (
@@ -32,7 +33,7 @@ const OrderOverview = React.createClass({
                     {
                         ifOrderLoaded(
                             <div className="col-xs-12 col-lg-6">
-                                <MealList meals={order.meals} />
+                                <MealList meals={order.meals} removeMeal={meal => dispatch(removeMeal(meal))} user={user} />
                                 <SignUpForMeal />
                             </div>
                         )
@@ -58,6 +59,6 @@ const OrderOverview = React.createClass({
 export default connect(
     state => ({
         order: state.activeOrder,
-    }),
-    {getOrder}
+        user: state.user,
+    })
 )(OrderOverview);

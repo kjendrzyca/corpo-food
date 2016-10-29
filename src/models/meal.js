@@ -4,20 +4,24 @@ const Schema = mongoose.Schema;
 const mealSchema = new Schema({
     _order: {
         type: Number,
-        ref: 'Order'
-    },
-    name: {
-        type: String,
-        required: [true, 'Podaj nazwę dania!']
-    },
-    hungryGuy: {
-        type: String,
-        required: [true, 'Podaj swoje imię.']
+        ref: 'Order',
     },
     cost: {
         type: Number,
-        required: [true, 'Podaj cenę dania!']
-    }
+        required: [true, 'Podaj cenę dania!'],
+    },
+    hungryGuy: {
+        type: String,
+        required: [true, 'Podaj swoje imię.'],
+    },
+    name: {
+        type: String,
+        required: [true, 'Podaj nazwę dania!'],
+    },
+    orderId: {
+        type: String,
+        require: [true, 'Podaj id ordera!'],
+    },
 });
 
 const schemaName = 'Meal';

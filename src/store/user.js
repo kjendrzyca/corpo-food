@@ -3,7 +3,7 @@ export default (state = {}, action) => {
     case 'SET_NAME':
         return {
             ...state,
-            name: action.name
+            name: action.name,
         };
     default:
         return state;

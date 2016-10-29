@@ -11,9 +11,9 @@ export function addNewOrder (order, validationErrorsCallback) {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(order)
+            body: JSON.stringify(order),
         })
         .then(checkFetchForErrors)
         .then(response => response.json())
@@ -25,7 +25,7 @@ export function addNewOrder (order, validationErrorsCallback) {
                 hungryGuysCount: 0,
                 author: order.author,
                 restaurant: order.restaurant,
-                state: OrderState.Open
+                state: OrderState.Open,
             };
             dispatch({type: 'ADD_NEW_ORDER', order: newOrder});
             dispatch(setManagerNotification(accessCode));
@@ -44,7 +44,7 @@ export function hydrateOrders () {
             const ordersToday = orders.map(orderWithStringDates => {
                 return {
                     ...orderWithStringDates,
-                    deadline: new Date(orderWithStringDates.deadline)
+                    deadline: new Date(orderWithStringDates.deadline),
                 };
             })
             .filter(order => {
@@ -70,7 +70,7 @@ export function getOrder (id) {
             .then(order => {
                 const activeOrder = Object.assign(order, {
                     deadline: new Date(order.deadline),
-                    deliveryTime: new Date(order.deliveryTime)
+                    deliveryTime: new Date(order.deliveryTime),
                 });
                 dispatch({type: 'GET_ORDER', activeOrder});
             })
@@ -87,7 +87,7 @@ export function getOrderToManage (accessCode) {
             .then(orderToManage => {
                 const activeOrder = Object.assign(orderToManage, {
                     deadline: new Date(orderToManage.deadline),
-                    deliveryTime: new Date(orderToManage.deliveryTime)
+                    deliveryTime: new Date(orderToManage.deliveryTime),
                 });
                 dispatch({type: 'GET_ORDER', activeOrder});
             })
@@ -100,7 +100,7 @@ export const signUpForMeal = (orderId, username, what, howMuch) => {
         cost: howMuch,
         hungryGuy: username,
         name: what,
-        orderId: orderId
+        orderId: orderId,
     };
 
     return dispatch => {
@@ -108,13 +108,28 @@ export const signUpForMeal = (orderId, username, what, howMuch) => {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
         })
         .then(checkFetchForErrors)
         .then(response => response.json())
-        .then(() => dispatch({type: 'SIGN_UP_FOR_MEAL', meal: payload}))
+        .then(response => dispatch({type: 'SIGN_UP_FOR_MEAL', meal: {...payload, _id: response.mealId}}))
+        .catch(error => handleFetchErrors(error, dispatch));
+    };
+};
+
+export const removeMeal = (meal) => {
+    return dispatch => {
+        fetch(`api/order/${meal.orderId}/meal/${meal._id}`, {
+            method: 'delete',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(checkFetchForErrors)
+        .then(() => dispatch({type: 'REMOVE_MEAL', meal: meal}))
         .catch(error => handleFetchErrors(error, dispatch));
     };
 };

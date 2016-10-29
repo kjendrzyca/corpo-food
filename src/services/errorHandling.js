@@ -3,16 +3,14 @@ const Polyglot = require('node-polyglot');
 const addError = require('../store/errorsActions').addError;
 
 module.exports.handleMongoValidationErrors = (errors, errorResources) => {
-    const polyglot = new Polyglot({
-        phrases: errorResources
-    });
+    const polyglot = new Polyglot({phrases: errorResources});
     const errorsDictionary = [];
 
     for (let property in errors) {
         if (errors.hasOwnProperty(property)) {
             errorsDictionary.push({
                 property,
-                message: polyglot.t(errors[property].message)
+                message: polyglot.t(errors[property].message),
             });
         }
     }
