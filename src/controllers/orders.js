@@ -149,6 +149,7 @@ exports.addMeal = (req, res) => {
         cost: mealInput.cost,
         hungryGuy: mealInput.hungryGuy,
         name: mealInput.name,
+        orderId: mealInput.orderId,
     });
 
     mealToAdd.validate(validationError => {

@@ -5,10 +5,17 @@ const MealList = React.createClass({
     propTypes: {
         meals: React.PropTypes.array.isRequired,
         resources: React.PropTypes.object.isRequired,
+        user: React.PropTypes.object.isRequired,
+    },
+
+    removeMeal (meal, someting) {
+        console.log(meal, someting);
     },
 
     render () {
-        const {resources} = this.props;
+        const {user, resources} = this.props;
+        const ifCurrentUser = (meal, content) => user.name === meal.hungryGuy ? content : null;
+
         return (
             <div className="MealList">
                 <h3>{resources.whoIsOrdering}</h3>
@@ -18,6 +25,7 @@ const MealList = React.createClass({
                             <th>{resources.who}</th>
                             <th>{resources.what}</th>
                             <th>{resources.howMuch}</th>
+                            <th />
                         </tr>
                     </thead>
                     <tbody>
@@ -26,6 +34,14 @@ const MealList = React.createClass({
                                 <td>{meal.hungryGuy}</td>
                                 <td>{meal.name}</td>
                                 <td>{meal.cost}</td>
+                                <td>
+                                    {ifCurrentUser(
+                                        meal,
+                                        <button className="btn btn-default" onClick={this.removeMeal.bind(null, meal)} type="button">
+                                            <span aria-hidden="true" className="glyphicon glyphicon-remove" />
+                                        </button>
+                                    )}
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -36,5 +52,7 @@ const MealList = React.createClass({
 });
 
 export default connect(
-    state => ({resources: state.localization.resources.mealList})
+    state => ({
+        resources: state.localization.resources.mealList,
+    })
 )(MealList);
