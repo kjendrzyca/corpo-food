@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {getOrder} from '../store/ordersActions';
+import {getOrder, removeMeal} from '../store/ordersActions';
 import Chat from './chat';
 import MealList from './mealList';
 import SignUpForMeal from './signUpForMeal';
@@ -13,6 +13,7 @@ const OrderOverview = React.createClass({
         getOrder: React.PropTypes.func.isRequired,
         order: React.PropTypes.object.isRequired,
         params: React.PropTypes.object.isRequired,
+        removeMeal: React.PropTypes.func.isRequired,
         user: React.PropTypes.object.isRequired,
     },
 
@@ -21,7 +22,7 @@ const OrderOverview = React.createClass({
     },
 
     render () {
-        const {order, user} = this.props;
+        const {order, removeMeal, user} = this.props;
         const ifOrderLoaded = content => !order.fetching ? content : null;
 
         return (
@@ -33,7 +34,7 @@ const OrderOverview = React.createClass({
                     {
                         ifOrderLoaded(
                             <div className="col-xs-12 col-lg-6">
-                                <MealList meals={order.meals} user={user} />
+                                <MealList meals={order.meals} removeMeal={removeMeal} user={user} />
                                 <SignUpForMeal />
                             </div>
                         )
@@ -61,5 +62,5 @@ export default connect(
         order: state.activeOrder,
         user: state.user,
     }),
-    {getOrder}
+    {getOrder, removeMeal}
 )(OrderOverview);

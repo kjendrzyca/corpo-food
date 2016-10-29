@@ -4,12 +4,13 @@ import {connect} from 'react-redux';
 const MealList = React.createClass({
     propTypes: {
         meals: React.PropTypes.array.isRequired,
+        removeMeal: React.PropTypes.func.isRequired,
         resources: React.PropTypes.object.isRequired,
         user: React.PropTypes.object.isRequired,
     },
 
-    removeMeal (meal, someting) {
-        console.log(meal, someting);
+    removeMeal (meal) {
+        this.props.removeMeal(meal);
     },
 
     render () {

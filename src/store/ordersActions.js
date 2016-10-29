@@ -114,7 +114,22 @@ export const signUpForMeal = (orderId, username, what, howMuch) => {
         })
         .then(checkFetchForErrors)
         .then(response => response.json())
-        .then(() => dispatch({type: 'SIGN_UP_FOR_MEAL', meal: payload}))
+        .then(response => dispatch({type: 'SIGN_UP_FOR_MEAL', meal: {...payload, _id: response.mealId}}))
+        .catch(error => handleFetchErrors(error, dispatch));
+    };
+};
+
+export const removeMeal = (meal) => {
+    return dispatch => {
+        fetch(`api/order/${meal.orderId}/meal/${meal._id}`, {
+            method: 'delete',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(checkFetchForErrors)
+        .then(() => dispatch({type: 'REMOVE_MEAL', meal: meal}))
         .catch(error => handleFetchErrors(error, dispatch));
     };
 };

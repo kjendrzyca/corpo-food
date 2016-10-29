@@ -37,8 +37,6 @@ const store = createStore(
     applyMiddleware(thunkMiddleware)
 );
 
-store.subscribe(() => console.log(store.getState()));
-
 const history = syncHistoryWithStore(browserHistory, store);
 
 const App = connect(state => ({

@@ -192,11 +192,11 @@ exports.addMeal = (req, res) => {
 };
 
 exports.removeMeal = (req, res) => {
-    const mealInput = req.body;
+    const {orderId, mealId} = req.params;
 
-    Order.findOneAndUpdate({_id: mealInput.orderId, state: OrderState.Open}, {
+    Order.findOneAndUpdate({_id: orderId, state: OrderState.Open}, {
         $pull: {
-            meals: {_id: mealInput.id},
+            meals: mealId,
         },
     }, (error, order) => {
         if (error) {
